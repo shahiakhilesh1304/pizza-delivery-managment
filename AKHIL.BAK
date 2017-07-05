@@ -1,0 +1,1220 @@
+#include<iostream.h>
+#include<conio.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<fstream.h>
+#include<string.h>
+#include<dos.h>
+#include<process.h>
+#include<graphics.h>
+class pizzat
+{
+public:
+	char pdt_type[30];
+	char pdt_name[30];
+	char pdt_size[30];
+};
+class pizza
+{
+	private:
+		char cname[100];
+		char add[100];
+		char ph_no[12];
+		int c_code;
+		int tax;
+	public:
+		long double tot_price;
+		int no_item;
+		char place[30];
+		int month,year,sec;
+		int min,hrs,hours,minute,date;
+		pizzat pt[30];
+		void ask_info()
+		{
+			cout<<"                    ***##>>PIZZA PALACE<<##*** ";
+			cout<<"\n\t**ENTER   THE   CUSTOMER   NAME: ";
+			gets(cname);
+			cout<<"\n\t**ENTER THE CUSTOMER CONTACT NUMBER (+91- or +011-) : ";
+			gets(ph_no);
+			cout<<"\n\t**ENTER   THE   CUSTOMER    ADDERESS: ";
+			gets(add);
+			struct date d;
+			getdate(&d);
+			cout<<"\n\tDATE OF BOOKING (dd-mm-yy) : "<<int(d.da_day)<<" - "<<int(d.da_mon)<<" - "<<int(d.da_year);
+			date=d.da_day;month=d.da_mon;year=d.da_year;
+			struct dostime_t t;
+			_dos_gettime(&t);
+
+			cout<<"\n\tTIME OF BOOKING (hh:mm:ss) : "<<int(t.hour)<<":"<<int(t.minute)<<":"<<int(t.second);
+			sec=t.second;min=t.minute;hrs=t.hour;
+			if(hrs>12)
+			{
+			cout<<"PM";
+			}
+			else
+			cout<<"AM";
+			randomize();
+			int ran=25+random(30);
+			c_code=ran;
+			cout<<"\n\n\t\tYour CUSTOMER CODE is : "<<c_code;
+			minute=min+30;
+			int mi=0;
+			int h=0,ho=hrs;
+			if(minute>60)
+			{
+			hours=hrs+1;
+			int m=minute-60;
+			mi=mi+m;
+			}
+			else
+			mi=minute;
+			if(hours>24)
+			{
+			h=hours-24;
+			ho=ho+h;
+			if(minute>60)
+			{
+			hours=hrs+1;
+			int m=minute-60;
+			mi=mi+m;
+			}
+			else
+			mi=minute;
+			}
+			else
+			ho=hours;
+			cout<<"\n\tPIZZA WILL BE DELIVERED TO YOU AT (hh:mm): ";
+			cout<<ho;cout<<":";cout<<mi;
+			if(ho>12&&mi>0)
+			{
+			cout<<" PM";
+			}
+			else
+			cout<<" AM";
+			delay(10000);
+
+		}
+		int c_codego()
+		{
+			return c_code;
+		}
+		void check_place();
+		void order();
+		void bill();
+		void modify(int ord);
+		void search(int ord);
+		void display();
+		void mod_sel();
+
+}p;
+void pizza::check_place()
+{
+	clrscr();
+	int k1;
+	cout<<"\n\n\n\n\t    ***CHECK YOUR DELIVERY DESTINATION***";
+	cout<<"\n\t   +---------------+----------------------+";
+	cout<<"\n\t   |    CODE       |       PLACE          |";
+	cout<<"\n\t   +===============+======================+";
+	cout<<"\n\t   |   12398       |       NEW DELHI      |";
+	cout<<"\n\t   +---------------+----------------------+";
+	cout<<"\n\t   |   12498       |       OLD DELHI      |";
+	cout<<"\n\t   +---------------+----------------------+";
+	cout<<"\n\t   |   12598       |       DELHI NCR      |";
+	cout<<"\n\t   +---------------+----------------------+";
+	cout<<"\n\n\t **ENTER THE PLACE CODE: ";
+	cin>>k1;
+	switch(k1)
+	{
+		case 12398:
+			cout<<"\n\tDELIVERY DESTINSTION IS: NEW DELHI";
+			strcpy(place,"NEW DELHI");
+			break;
+		case 12498:
+			cout<<"\n\tDELIVERY DESTINSTION IS: OLD DELHI";
+			strcpy(place,"OLD DELHI");
+			break;
+		case 12598:
+			cout<<"\n\tDELIVERY DESTINSTION IS: DELHI NCR";
+			strcpy(place,"DELHI NCR");
+			break;
+		default:
+			cout<<"\n\tYOU ENTERED A WRONG CODE EHICH CAN'T ACCESS ANY PLACE";
+			break;
+	}
+}
+int c=0;int m;
+void pizza::order()
+{
+	int x,y;char ans5;  char ch1;int k3;int k;
+	for(int c=0;c<m;c++)
+	{
+		delay(1000);
+		clrscr();
+		for(int i=0;i<40;i++)
+		cout<<""<<"";
+
+		cout<<"\n\n                        ***##>>PIZZA PALACE<<##*** \n\n";
+		for( i=0;i<40;i++)
+		cout<<""<<"";
+		cout<<"\n\n";
+		int ch;
+		cout<<"\n\t    ++=======+=====================++";
+		cout<<"\n\t    || S.no. |   CATEGOERY         ||";
+		cout<<"\n\t    ++=======|=====================++";
+		cout<<"\n\t    ||  1 .  |    VEGETERIAN       ||";
+		cout<<"\n\t    ++-------|---------------------++";
+		cout<<"\n\t    ||  2 .  |    NON VEGETERIAN   ||";
+		cout<<"\n\t    ++=======+=====================++";
+		cout<<"\n\n\t     **Enter the choice  : ";
+		cin>>ch;
+		switch(ch)
+		{
+		case 1:
+			clrscr();
+			strcpy(pt[c].pdt_type,"VEGETERIAN");
+			cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+			cout<<"\n\t||                        ***##>>PIZZA PALACE<<##***                 ||";
+			cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+			cout<<"\n\t||||||||||||||||||||||||||||[VEGETERIAN]|||||||||||||||||||||||||||||||";
+			cout<<"\n\t++======+========================+==========+===========+============++";
+			cout<<"\n\t|| S.no.|     PIZZA              |FAMILY(rs)|MEDIUM(rs) | REGULAR(rs)||";
+			cout<<"\n\t++======|========================|==========|===========|============++";
+			cout<<"\n\t|| 1 .  |  GREEN MEXICAN PIZZA   |  600     |   550     |     500    ||";
+			cout<<"\n\t++------|------------------------|----------|-----------|------------++";
+			cout<<"\n\t|| 2 .  |  FARM HOUSE PIZZA      |  500     |   450     |     400    ||";
+			cout<<"\n\t++------|------------------------|----------|-----------|------------++";
+			cout<<"\n\t|| 3 .  |  CHEESY MACRONI PIZZA  |  400     |   350     |     300    ||";
+			cout<<"\n\t++------|------------------------|----------|-----------|------------++";
+			cout<<"\n\t|| 4 .  |  MIX VEG GRAND         |  300     |   250     |     200    ||";
+			cout<<"\n\t++======+========================+==========+===========+============++";
+			cout<<"\n\n\t\tPIZZA YOU WANT TO DELIVERED TO YOU: ";
+			int ch1;
+			cin>>ch1;
+			switch(ch1)
+			{
+			case 1:
+				clrscr();
+				int ch2;
+				strcpy(pt[c].pdt_name,"GREEN MEXICAN PIZZA");
+				cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+				cout<<"\n\t||                        ***##>>PIZZA PALACE<<##***                 ||";
+				cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+				cout<<"\n\n\t++======+===================+===========++";
+				cout<<"\n\t|| S.no.|     SIZE          |    RATE   ||";
+				cout<<"\n\t++======|===================|===========++";
+				cout<<"\n\t|| 1 .  |    FAMILY         |     600   ||";
+				cout<<"\n\t++------|-------------------|-----------++";
+				cout<<"\n\t|| 2 .  |    MEDIUM         |     550   ||";
+				cout<<"\n\t++------|-------------------|-----------||";
+				cout<<"\n\t|| 3 .  |    REGULAR        |     500   ||";
+				cout<<"\n\t++======+===================+===========++";
+				cout<<"\n\n\tSIZE YOU WANT: ";
+				cin>>ch2;
+				switch(ch2)
+				{
+				case 1:
+					clrscr();
+					strcpy(pt[c].pdt_size,"FAMILY");
+					cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+					cout<<"\n\t||                        ***##>>PIZZA PALACE<<##***                 ||";
+					cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+					cout<<"\n\n\n\tEnter the Quantity: ";
+					cin>>no_item;
+					int price;
+					price=600*no_item;
+					tax=(price/100)*12;
+					tot_price=price+tax;
+					cout<<"\n\n\tAMOUNT TO BE PAID: "<<tot_price;
+						break;
+					case 2:
+					clrscr();
+					strcpy(pt[c].pdt_size,"MEDIUM");
+					cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+					cout<<"\n\t||                        ***##>>PIZZA PALACE<<##***                 ||";
+					cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+
+					cout<<"\n\n\n\t\t\tEnter the Quantity : ";
+					cin>>no_item;
+					price=550*no_item;
+					tot_price=(price/100)*12;
+					cout<<"\n\n\tAMOUNT TO BE PAID: "<<tot_price;
+					break;
+					case 3:
+					clrscr();
+					strcpy(pt[c].pdt_size,"REGULAR");
+					cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+					cout<<"\n\t||                        ***##>>PIZZA PALACE<<##***                 ||";
+					cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+
+					cout<<"\n\n\n\t\t\tEnter the Quantity : ";
+					cin>>no_item;
+					price=500*no_item;
+					tax=(price/100)*12;
+					tot_price=price+tax;
+					cout<<"\n\n\tAMOUNT TO BE PAID: "<<tot_price;
+					break;
+					default:
+					cout<<"\n\tSORRY WE ARE UNABLE TO TAKE DELIVERY";
+					break;
+				}
+				break;
+			case 2:
+				clrscr();
+				strcpy(pt[c].pdt_name,"FARM HOUSE PIZZA");
+				cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+				cout<<"\n\t||                        ***##>>PIZZA PALACE<<##***                 ||";
+				cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+				cout<<"\n\n\t++======+===================+===========++";
+				cout<<"\n\t|| S.no.|     SIZE          |    RATE   ||";
+				cout<<"\n\t++======|===================|===========++";
+				cout<<"\n\t|| 1 .  |    FAMILY         |     500   ||";
+				cout<<"\n\t++------|-------------------|-----------++";
+				cout<<"\n\t|| 2 .  |    MEDIUM         |     450   ||";
+				cout<<"\n\t++------|-------------------|-----------||";
+				cout<<"\n\t|| 3 .  |    REGULAR        |     400   ||";
+				cout<<"\n\t++======+===================+===========++";
+				cout<<"\n\n\tSIZE YOU WANT: ";
+				cin>>ch2;
+				switch(ch2)
+				{
+				case 1:
+				clrscr();
+				strcpy(pt[c].pdt_size,"FAMILY");
+				cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+				cout<<"\n\t||                        ***##>>PIZZA PALACE<<##***                 ||";
+				cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+
+				cout<<"\n\tEnter the Quantity : ";
+				cin>>no_item;
+
+				int price=500*no_item;
+				tax=(price/100)*12;
+				tot_price=price+tax;
+				cout<<"\n\n\tAMOUNT TO BE PAID: "<<tot_price;
+				break;
+				case 2:
+				clrscr();
+				strcpy(pt[c].pdt_size,"MEDIUM");
+				cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+				cout<<"\n\t||                        ***##>>PIZZA PALACE<<##***                 ||";
+				cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+
+				cout<<"\n\tEnter the Quantity : ";
+				cin>>no_item;
+				price=450*no_item;
+				tax=(price/100)*12; tot_price=price+tax;
+				cout<<"\n\n\tAMOUNT TO BE PAID: "<<tot_price;
+				break;
+				case 3:
+				clrscr();
+				strcpy(pt[c].pdt_size,"REGULAR");
+				cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+				cout<<"\n\t||                        ***##>>PIZZA PALACE<<##***                 ||";
+				cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+
+				cout<<"\n\tEnter the Quantity : ";
+				cin>>no_item;
+				price=400*no_item;
+				tax=(price/100)*12; tot_price=price+tax;
+				cout<<"\n\n\tAMOUNT TO BE PAID: "<<tot_price;
+				break;
+				default:
+				cout<<"\n\tSORRY WE ARE UNABLE TO TAKE YOUR DELIVERY" ;
+				break;
+				}
+				break;
+			case 3:
+				clrscr();
+				strcpy(pt[c].pdt_name,"CHEESY MACRONI PIZZA");
+				cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+				cout<<"\n\t||                        ***##>>PIZZA PALACE<<##***                 ||";
+				cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+				cout<<"\n\n\t++======+===================+===========++";
+				cout<<"\n\t|| S.no.|     SIZE          |    RATE   ||";
+				cout<<"\n\t++======|===================|===========++";
+				cout<<"\n\t|| 1 .  |    FAMILY         |     400   ||";
+				cout<<"\n\t++------|-------------------|-----------++";
+				cout<<"\n\t|| 2 .  |    MEDIUM         |     350   ||";
+				cout<<"\n\t++------|-------------------|-----------||";
+				cout<<"\n\t|| 3 .  |    REGULAR        |     300   ||";
+				cout<<"\n\t++======+===================+===========++";
+				cout<<"\n\n\tSIZE YOU WANT: ";
+				cin>>ch2;
+				switch(ch2)
+				{
+					case 1:
+					clrscr();
+
+					strcpy(pt[c].pdt_size,"FAMILY");
+					cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+					cout<<"\n\t||                        ***##>>PIZZA PALACE<<##***                 ||";
+					cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+
+					cout<<"\n\n\t\tEnter the Quantity : ";
+					cin>>no_item;
+					int price=400*no_item;
+					tax=(price/100)*12; tot_price=price+tax;
+					cout<<"\n\n\tAMOUNT TO BE PAID: "<<tot_price;
+
+					break;
+					case 2:
+					clrscr();
+					strcpy(pt[c].pdt_size,"MEDIUM");
+					cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+					cout<<"\n\t||                        ***##>>PIZZA PALACE<<##***                 ||";
+					cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+
+					cout<<"\n\n\t\tEnter the Quantity : ";
+					cin>>no_item;
+					price=350*no_item;
+					tax=(price/100)*12;tot_price=price+tax;
+					cout<<"\n\n\tAMOUNT TO BE PAID: "<<tot_price;
+
+					break;
+					case 3:
+					clrscr();
+					strcpy(pt[c].pdt_size,"REGULAR");
+					cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+					cout<<"\n\t||                        ***##>>PIZZA PALACE<<##***                 ||";
+					cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+
+					cout<<"\n\n\t\tEnter the Quantity : ";
+					cin>>no_item;
+					price=300*no_item;
+					tax=(price/100)*12; tot_price=price+tax;
+					cout<<"\n\n\tAMOUNT TO BE PAID: "<<tot_price;
+
+					break;
+					default:
+					cout<<"\n\tSORRY WE ARE UNABLE TO TAKE YOUR DELIVERY" ;
+					break;
+					}
+			case 4:
+
+				clrscr();
+				strcpy(pt[c].pdt_name,"MIX VEG GRAND");
+				cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+				cout<<"\n\t||                        ***##>>PIZZA PALACE<<##***                 ||";
+				cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+				cout<<"\n\n\t++======+===================+===========++";
+				cout<<"\n\t|| S.no.|     SIZE          |    RATE   ||";
+				cout<<"\n\t++======|===================|===========++";
+				cout<<"\n\t|| 1 .  |    FAMILY         |     300   ||";
+				cout<<"\n\t++------|-------------------|-----------++";
+				cout<<"\n\t|| 2 .  |    MEDIUM         |     250   ||";
+				cout<<"\n\t++------|-------------------|-----------||";
+				cout<<"\n\t|| 3 .  |    REGULAR        |     200   ||";
+				cout<<"\n\t++======+===================+===========++";
+				cout<<"\n\n\tSIZE YOU WANT: ";
+				cin>>ch2;
+				switch(ch2)
+				{
+					case 1:
+					clrscr();
+
+					strcpy(pt[c].pdt_size,"FAMILY");
+					cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+					cout<<"\n\t||                        ***##>>PIZZA PALACE<<##***                 ||";
+					cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+
+					cout<<"\n\n\t\tEnter the Quantity : ";
+					cin>>no_item;
+					int price=300*no_item;
+					tax=(price/100)*12; tot_price=price+tax;
+					cout<<"\n\n\tAMOUNT TO BE PAID: "<<tot_price;
+
+					break;
+					case 2:
+					clrscr();
+					strcpy(pt[c].pdt_size,"MEDIUM");
+					cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+					cout<<"\n\t||                        ***##>>PIZZA PALACE<<##***                 ||";
+					cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+
+					cout<<"\n\n\t\tEnter the Quantity : ";
+					cin>>no_item;
+					price=250*no_item;
+					tax=(price/100)*12;tot_price=price+tax;
+					cout<<"\n\n\tAMOUNT TO BE PAID: "<<tot_price;
+
+					break;
+					case 3:
+					clrscr();
+					strcpy(pt[c].pdt_size,"REGULAR");
+					cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+					cout<<"\n\t||                        ***##>>PIZZA PALACE<<##***                 ||";
+					cout<<"\n\t|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+
+					cout<<"\n\n\t\tEnter the Quantity : ";
+					cin>>no_item;
+					price=200*no_item;
+					tax=(price/100)*12; tot_price=price+tax;
+					cout<<"\n\n\tAMOUNT TO BE PAID: "<<tot_price;
+
+					break;
+					default:
+					cout<<"\n\tSORRY WE ARE UNABLE TO TAKE YOUR DELIVERY" ;
+					break;
+					}
+		default:
+		cout<<"\n\tYOUR REQUEST IS NOT AVAILABLE TO US SORRY";
+		break;
+		}
+		break;
+case 2 :
+clrscr();               strcpy(pt[c].pdt_type,"NON VEGETERIAN");
+			cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+			cout<<"\n  ||                        ***##>>PIZZA PALACE<<##***                 ||";
+			cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+			cout<<"\n  |||||||||||||||||||||||||||||||[NON VEGETERIAN]||||||||||||||||||||||||";
+			cout<<"\n  ++======+========================+==========+===========+============++";
+			cout<<"\n  || S.no.|     PIZZA              |FAMILY(rs)|MEDIUM(rs) | REGULAR(rs)||";
+			cout<<"\n  ++======|========================|==========|===========|============++";
+			cout<<"\n  || 1 .  |  CHICKEN SPLENDER PIZZA|  800     |   750     |     700    ||";
+			cout<<"\n  ++------|------------------------|----------|-----------|------------++";
+			cout<<"\n  || 2 .  |  CHICKEN GRAND PIZZA   |  700     |   650     |     600    ||";
+			cout<<"\n  ++------|------------------------|----------|-----------|------------++";
+			cout<<"\n  || 3 .  |  GRILLED CHICKEN PIZZA |  600     |   550     |     500    ||";
+			cout<<"\n  ++------|------------------------|----------|-----------|------------++";
+			cout<<"\n  || 4 .  |  CHICKEN KIMA GRILL    |  500     |   450     |     400    ||";
+			cout<<"\n  ++======+========================+==========+===========+============++";
+			cout<<"\n\n\t\tPIZZA YOU WANT TO DELIVERED TO YOU: ";
+			cin>>ch1;
+			switch(ch1)
+			{
+			case 1:   int ch2;
+				clrscr();
+				strcpy(pt[c].pdt_name,"CHICKEN SPLENDER PIZZA");
+				cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+				cout<<"\n  ||                        ***##>>PIZZA PALACE<<##***                 ||";
+				cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+				cout<<"\n\n  ++======+===================+===========++";
+				cout<<"\n  || S.no.|     SIZE          |    RATE   ||";
+				cout<<"\n  ++======|===================|===========++";
+				cout<<"\n  || 1 .  |    FAMILY         |     800   ||";
+				cout<<"\n  ++------|-------------------|-----------++";
+				cout<<"\n  || 2 .  |    MEDIUM         |     750   ||";
+				cout<<"\n  ++------|-------------------|-----------||";
+				cout<<"\n  || 3 .  |    REGULAR        |     700   ||";
+				cout<<"\n  ++======+===================+===========++";
+				cout<<"\n\n\tSIZE YOU WANT: ";
+				cin>>ch2;
+				switch(ch2)
+				{
+				case 1:
+					clrscr();
+					strcpy(pt[c].pdt_size,"FAMILY");
+					cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+					cout<<"\n  ||                        ***##>>PIZZA PALACE<<##***                 ||";
+					cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+					cout<<"\n\n\n\tEnter the Quantity: ";
+					cin>>no_item;
+					int price=800*no_item;
+					tax=(price/100)*12;
+					tot_price=price+tax;
+					cout<<"\n\n\tAMOUNT TO BE PAID: "<<tot_price;
+					break;
+					case 2:
+					clrscr();
+					strcpy(pt[c].pdt_size,"MEDIUM");
+					cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+					cout<<"\n  ||                        ***##>>PIZZA PALACE<<##***                 ||";
+					cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+
+					cout<<"\n\n\n\t\t\tEnter the Quantity : ";
+					cin>>no_item;
+					price=750*no_item;
+					tot_price=(price/100)*12;
+					cout<<"\n\n\tAMOUNT TO BE PAID: "<<tot_price;
+					break;
+					case 3:
+					clrscr();
+					strcpy(pt[c].pdt_size,"REGULAR");
+					cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+					cout<<"\n  ||                        ***##>>PIZZA PALACE<<##***                 ||";
+					cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+
+					cout<<"\n\n\n\t\t\tEnter the Quantity : ";
+					cin>>no_item;
+					price=700*no_item;
+					tax=(price/100)*12;
+					tot_price=price+tax;
+					cout<<"\n\n\tAMOUNT TO BE PAID: "<<tot_price;
+					break;
+					default:
+					cout<<"\n\tSORRY WE ARE UNABLE TO TAKE DELIVERY";
+					break;
+				}
+				break;
+			case 2:
+				clrscr();
+				strcpy(pt[c].pdt_name,"CHICKEN GRAND PIZZA");
+				cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+				cout<<"\n  ||                        ***##>>PIZZA PALACE<<##***                 ||";
+				cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+				cout<<"\n\n  ++======+===================+===========++";
+				cout<<"\n  || S.no.|     SIZE          |    RATE   ||";
+				cout<<"\n  ++======|===================|===========++";
+				cout<<"\n  || 1 .  |    FAMILY         |     700   ||";
+				cout<<"\n  ++------|-------------------|-----------++";
+				cout<<"\n  || 2 .  |    MEDIUM         |     650   ||";
+				cout<<"\n  ++------|-------------------|-----------||";
+				cout<<"\n  || 3 .  |    REGULAR        |     600   ||";
+				cout<<"\n  ++======+===================+===========++";
+				cout<<"\n\n\tSIZE YOU WANT: ";
+				cin>>ch2;
+				switch(ch2)
+				{
+				case 1:
+				clrscr();
+				strcpy(pt[c].pdt_size,"FAMILY");
+				cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+				cout<<"\n  ||                        ***##>>PIZZA PALACE<<##***                 ||";
+				cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+
+				cout<<"\n\tEnter the Quantity : ";
+				cin>>no_item;
+				int price=700*no_item;
+				tax=(price/100)*12;
+				tot_price=price+tax;
+				cout<<"\n\n\tAMOUNT TO BE PAID: "<<tot_price;
+				break;
+				case 2:
+				clrscr();
+				strcpy(pt[c].pdt_size,"MEDIUM");
+				cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+				cout<<"\n  ||                        ***##>>PIZZA PALACE<<##***                 ||";
+				cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+
+				cout<<"\n\tEnter the Quantity : ";
+				cin>>no_item;
+				price=650*no_item;
+				tax=(price/100)*12; tot_price=price+tax;
+				cout<<"\n\n\tAMOUNT TO BE PAID: "<<tot_price;
+				break;
+				case 3:
+				clrscr();
+				strcpy(pt[c].pdt_size,"REGULAR");
+				cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+				cout<<"\n  ||                        ***##>>PIZZA PALACE<<##***                 ||";
+				cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+
+				cout<<"\n\tEnter the Quantity : ";
+				cin>>no_item;
+				price=600*no_item;
+				tax=(price/100)*12; tot_price=price+tax;
+				cout<<"\n\n\tAMOUNT TO BE PAID: "<<tot_price;
+				break;
+				default:
+				cout<<"\n\tSORRY WE ARE UNABLE TO TAKE YOUR DELIVERY" ;
+				break;
+				}
+				break;
+			case 3:
+				clrscr();
+				strcpy(pt[c].pdt_name,"GRILLED CHICKEN PIZZA");
+				cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+				cout<<"\n  ||                        ***##>>PIZZA PALACE<<##***                 ||";
+				cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+				cout<<"\n\n  ++======+===================+===========++";
+				cout<<"\n  || S.no.|     SIZE          |    RATE   ||";
+				cout<<"\n  ++======|===================|===========++";
+				cout<<"\n  || 1 .  |    FAMILY         |     600   ||";
+				cout<<"\n  ++------|-------------------|-----------++";
+				cout<<"\n  || 2 .  |    MEDIUM         |     550   ||";
+				cout<<"\n  ++------|-------------------|-----------||";
+				cout<<"\n  || 3 .  |    REGULAR        |     500   ||";
+				cout<<"\n  ++======+===================+===========++";
+				cout<<"\n\n\tSIZE YOU WANT: ";
+				cin>>ch2;
+				switch(ch2)
+				{
+					case 1:
+					clrscr();
+
+					strcpy(pt[c].pdt_size,"FAMILY");
+					cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+					cout<<"\n  ||                        ***##>>PIZZA PALACE<<##***                 ||";
+					cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+
+					cout<<"\n\n\t\tEnter the Quantity : ";
+					cin>>no_item;
+					int(price)=600*no_item;
+					tax=(price/100)*12; tot_price=price+tax;
+					cout<<"\n\n\tAMOUNT TO BE PAID: "<<tot_price;
+
+					break;
+					case 2:
+					clrscr();
+					strcpy(pt[c].pdt_size,"MEDIUM");
+					cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+					cout<<"\n  ||                        ***##>>PIZZA PALACE<<##***                 ||";
+					cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+
+					cout<<"\n\n\t\tEnter the Quantity : ";
+					cin>>no_item;
+					price=550*no_item;
+					tax=(price/100)*12;tot_price=price+tax;
+					cout<<"\n\n\tAMOUNT TO BE PAID: "<<tot_price;
+
+					break;
+					case 3:
+					clrscr();
+					strcpy(pt[c].pdt_size,"REGULAR");
+					cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+					cout<<"\n  ||                        ***##>>PIZZA PALACE<<##***                 ||";
+					cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+
+					cout<<"\n\n\tEnter the Quantity : ";
+					cin>>no_item;
+					price=500*no_item;
+					tax=(price/100)*12; tot_price=price+tax;
+					cout<<"\n\n\tAMOUNT TO BE PAID: "<<tot_price;
+
+					break;
+					default:
+					cout<<"\n\tSORRY WE ARE UNABLE TO TAKE YOUR DELIVERY" ;
+					break;
+					}
+			case 4:
+
+				clrscr();
+				strcpy(pt[c].pdt_name,"CHICKEN KIMA GRILL");
+				cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+				cout<<"\n  ||                        ***##>>PIZZA PALACE<<##***                 ||";
+				cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+				cout<<"\n\n  ++======+===================+===========++";
+				cout<<"\n  || S.no.|     SIZE          |    RATE   ||";
+				cout<<"\n  ++======|===================|===========++";
+				cout<<"\n  || 1 .  |    FAMILY         |     500   ||";
+				cout<<"\n  ++------|-------------------|-----------++";
+				cout<<"\n  || 2 .  |    MEDIUM         |     450   ||";
+				cout<<"\n  ++------|-------------------|-----------||";
+				cout<<"\n  || 3 .  |    REGULAR        |     400   ||";
+				cout<<"\n  ++======+===================+===========++";
+				cout<<"\n\n\tSIZE YOU WANT: ";
+				cin>>ch2;
+				switch(ch2)
+				{
+					case 1:
+					clrscr();
+
+					strcpy(pt[c].pdt_size,"FAMILY");
+					cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+					cout<<"\n  ||                        ***##>>PIZZA PALACE<<##***                 ||";
+					cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+
+					cout<<"\n\n\t\tEnter the Quantity : ";
+					cin>>no_item;
+					int(price)=500*no_item;
+					tax=(price/100)*12; tot_price=price+tax;
+					cout<<"\n\n\tAMOUNT TO BE PAID: "<<tot_price;
+
+					break;
+					case 2:
+					clrscr();
+					strcpy(pt[c].pdt_size,"MEDIUM");
+					cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+					cout<<"\n  ||                        ***##>>PIZZA PALACE<<##***                 ||";
+					cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+
+					cout<<"\n\n\t\tEnter the Quantity : ";
+					cin>>no_item;
+					price=450*no_item;
+					tax=(price/100)*12;tot_price=price+tax;
+					cout<<"\n\n\tAMOUNT TO BE PAID: "<<tot_price;
+
+					break;
+					case 3:
+					clrscr();
+					strcpy(pt[c].pdt_size,"REGULAR");
+					cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+					cout<<"\n  ||                        ***##>>PIZZA PALACE<<##***                 ||";
+					cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+
+					cout<<"\n\n\t\tEnter the Quantity : ";
+					cin>>no_item;
+					price=400*no_item;
+					tax=(price/100)*12; tot_price=price+tax;
+					cout<<"\n\n\tAMOUNT TO BE PAID: "<<tot_price;
+
+					break;
+					default:
+					cout<<"\n\tSORRY WE ARE UNABLE TO TAKE YOUR DELIVERY" ;
+					break;
+					}
+				break;
+		default:
+		cout<<"\n\tYOUR REQUEST IS NOT AVAILABLE TO US SORRY";
+		break;
+		} }
+
+}
+}
+void pizza::mod_sel()
+{
+	int y;
+	cout<<"+======+================+==============+========+\n";
+	cout<<"|B.code|     NAME       |    CITY      |  RATE  |\n";
+	cout<<"+======+================+==============+========+\n";
+	cout<<"|"<<c_codego();y=wherey();gotoxy(8,y);cout<<"|"<<cname;y=wherey();gotoxy(25,y);cout<<"|"<<place;y=wherey();gotoxy(40,y);cout<<"|"<<tot_price;y=wherey();gotoxy(49,y);cout<<"|"<<"\n";
+	cout<<"+===============================================+\n";
+
+}
+void pizza::display()
+{
+ifstream f("customer.dat",ios::binary);
+while(!f.eof())
+{
+f.read((char*)&p,sizeof(p));
+mod_sel();
+}
+f.close();
+}
+void pizza::search(int ord)
+{
+	ifstream f2("customer.dat",ios::binary);
+	while(!f2.eof())
+	{f2.read((char*)&p,sizeof(p));
+
+	 if(c_code==ord)
+	 {
+	 bill();
+	 break;
+	 }
+	}
+	f2.close();
+}
+void pizza::modify(int ord)
+{
+		int pos;
+		fstream f1("customer.dat",ios::binary);
+		while(!f1.eof())
+		{
+		pos=f1.tellg();
+		f1.read((char*)&p,sizeof(p));
+		if(c_code==ord)
+		{
+		{
+		order();
+		bill();
+		}
+		f1.seekg(pos);
+		f1.write((char*)&p,sizeof(p));
+		}
+		}
+		f1.close();
+}
+void menu()
+{
+cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+cout<<"\n  ||                        ***##>>PIZZA PALACE<<##***                 ||";
+cout<<"\n  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
+cout<<"\n\n  |||||||||||||||||||||||||||||||[NON VEGETERIAN]||||||||||||||||||||||||";
+cout<<"\n  ++======+========================+==========+===========+============++";
+cout<<"\n  || S.no.|     PIZZA              |FAMILY(rs)|MEDIUM(rs) | REGULAR(rs)||";
+cout<<"\n  ++======|========================|==========|===========|============++";
+cout<<"\n  || 1 .  |  CHICKEN SPLENDER PIZZA|  800     |   750     |     700    ||";
+cout<<"\n  || 2 .  |  CHICKEN GRAND PIZZA   |  700     |   650     |     600    ||";
+cout<<"\n  || 3 .  |  GRILLED CHICKEN PIZZA |  600     |   550     |     500    ||";
+cout<<"\n  || 4 .  |  CHICKEN KIMA GRILL    |  500     |   450     |     400    ||";
+cout<<"\n  ++======+========================+==========+===========+============++";
+cout<<"\n\n  |||||||||||||||||||||||||||||||||[VEGETERIAN]||||||||||||||||||||||||||";
+cout<<"\n  ++======+========================+==========+===========+============++";
+cout<<"\n  || S.no.|     PIZZA              |FAMILY(rs)|MEDIUM(rs) | REGULAR(rs)||";
+cout<<"\n  ++======|========================|==========|===========|============++";
+cout<<"\n  || 1 .  |  GREEN MEXICAN PIZZA   |  600     |   550     |     500    ||";
+cout<<"\n  || 2 .  |  FARM HOUSE PIZZA      |  500     |   450     |     400    ||";
+cout<<"\n  || 3 .  |  CHEESY MACRONI PIZZA  |  400     |   350     |     300    ||";
+cout<<"\n  || 4 .  |  MIX VEG GRAND         |  300     |   250     |     200    ||";
+cout<<"\n  ++======+========================+==========+===========+============++";
+
+}
+
+void pizza::bill()
+{
+int y=0;int t;
+t=m;
+delay(1000);
+clrscr();
+cout<<"                                   PIZZA PALACE \n";
+cout<<"                                 BRANCH NO->1256\n";
+cout<<"                                   DELHI-NCR\n";
+cout<<"                         phone->011- 88888888 ; 64121837 " ;
+cout<<"\n~ CUSTOMER NAME -> "<<cname;   cout<<"  ~ PHONE NUMBER-> (+91 or +011) "<<ph_no<<"\n";
+cout<<"   ~ CUSTOMER ADDRESS-> "<<add<<"\n";
+cout<<"                     ~ DATE OF BOOKING-> "<<date<<"-"<<month<<"-"<<year<<"\n";
+cout<<"                     ~ TIME OF BOOKING-> "<<hrs<<":"<<min<<":"<<sec<<"\n";
+cout<<"                     ~ TIME TO DELIVER-> "<<hours<<":"<<minute<<"\n";
+cout<<"                     ~ PLACE TO DELIVER = "<<place<<"\n";
+cout<<"                      [****CUSTOMER CODE-> "<<c_code<<"****]\n";
+cout<<"                                 TAX= 12%\n";
+cout<<"                        ****FREE HOME DELIVERY****\n";
+cout<<"  +===============+============================+==============+=============+\n";
+cout<<"  |  CATEGOERY    |       PRODUCT              |    CITY      |   AMOUNT    |\n";
+cout<<"  +=========================================================================+\n";
+for(int i=0;i<t;i++)
+{
+y=wherey();
+gotoxy(1,y);
+cout<<"  |";
+cout<<pt[i].pdt_type;
+y=wherey();
+gotoxy(19,y);
+cout<<"|";
+cout<<pt[i].pdt_name;
+y=wherey();
+gotoxy(48,y);
+cout<<"|";
+cout<<place;
+y=wherey();
+gotoxy(63,y);
+cout<<"|";
+cout<<tot_price<<" RS";
+y=wherey();
+gotoxy((63+14),y);
+cout<<"|";
+}
+y=wherey();gotoxy(1,y);cout<<"  +===============+============================+==============+=============+\n";
+}
+void main()
+{
+int n;
+int k,ord;char ans='n',ans1='n',ans2='n';
+clrscr();
+cout<<"\n\n\n\n\n\n  ,,,,,,,,   _______________  ..............  ..............   __~~~~~~~~__\n";
+cout<<"\n  ||     !!         ||                     /               /    ||        ||\n";
+cout<<"\n  ||     !!         ||                   /               /      ||        ||\n";
+cout<<"\n  ||     !!         ||                 /               /        ||        ||\n";
+cout<<"\n  ||~~~~~~~         ||               /               /          ||%%%%%%%%||\n";
+cout<<"\n  ||                ||             /               /            ||        ||\n";
+cout<<"\n  ||                ||           /               /              ||        ||\n";
+cout<<"\n  ||          ______||_______  /.............  /.............   ||        ||\n";
+delay(1000);
+{
+clrscr();
+cout<<" \n\n\n\n\n  ,,,,,,,,   __~~~~~~~~__   ||            __~~~~~~~~__      (_~_~    ||******    \n";
+cout<<"  ||     !!   ||        ||   ||            ||        ||     *         ||          \n";
+cout<<"  ||     !!   ||        ||   ||            ||        ||    (          ||          \n";
+cout<<"  ||     !!   ||        ||   ||            ||        ||   *           ||          \n";
+cout<<"  ||~~~~~~~   ||%%%%%%%%||   ||            ||%%%%%%%%||  (            ||*****     \n";
+cout<<"  ||          ||        ||   ||            ||        ||   *           ||          \n";
+cout<<"  ||          ||        ||   ||            ||        ||    (          ||          \n";
+cout<<"  ||          ||        ||   ||            ||        ||     *         ||          \n";
+cout<<"  ||          ||        ||   ||#########   ||        ||      (_~_~    ||******    \n";
+delay(1000);
+clrscr();
+}
+  int gdriver = DETECT, gmode, errorcode;
+  int midx, midy;
+  int radius = 100;
+  initgraph(&gdriver,&gmode,"C:\\turboc3\\bgi");
+   midx = getmaxx() / 2;
+   midy = getmaxy() / 2;
+   setcolor(getmaxcolor());
+   {
+   cout<<"\n\n\nL  A D I N G .";
+   setcolor(RED);
+   circle(midx, midy, radius);
+   delay(1000);
+   setcolor(RED);
+   gotoxy(midx,midy);
+   circle(midx,midy,90);
+   delay(1000);
+   setcolor(RED);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,80);      delay(1000);setcolor(YELLOW);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,70);      delay(1000);setcolor(YELLOW);
+					     gotoxy(midx,midy);
+   circle(midx,midy,60);      delay(1000);setcolor(YELLOW);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,50);      delay(1000);setcolor(YELLOW);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,40);      delay(1000);setcolor(GREEN);
+					     gotoxy(midx,midy);
+   circle(midx,midy,30);      delay(1000);setcolor(GREEN);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,20);      delay(1000);setcolor(GREEN);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,10);      delay(1000);setcolor(GREEN);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,5);      delay(1000);setcolor(GREEN);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,3);      delay(1000);setcolor(GREEN);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,2);      delay(1000);setcolor(GREEN);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,1);      delay(1000);setcolor(GREEN);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,0);      delay(1000);setcolor(GREEN);
+	sound(10*random(100));
+	delay(200);
+	nosound();
+   setcolor(RED);
+   circle(midx, midy, 0);
+   delay(1000);
+   setcolor(RED);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,2);
+   delay(1000);
+   setcolor(RED);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,3);      delay(1000);setcolor(RED);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,5);      delay(1000);setcolor(RED);
+					     gotoxy(midx,midy);
+   circle(midx,midy,10);      delay(1000);setcolor(RED);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,20);      delay(1000);setcolor(YELLOW);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,30);      delay(1000);setcolor(YELLOW);
+					     gotoxy(midx,midy);
+   circle(midx,midy,40);      delay(1000);setcolor(YELLOW);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,50);      delay(1000);setcolor(GREEN);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,60);      delay(1000);setcolor(GREEN);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,70);      delay(1000);setcolor(GREEN);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,80);      delay(1000);setcolor(GREEN);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,90);      delay(1000);setcolor(GREEN);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,100);      delay(1000);setcolor(GREEN);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,110);      delay(1000);setcolor(GREEN);
+   }
+   closegraph();
+delay(1000);
+{
+clrscr();
+cout<<"\n\n\n\n\n\n\n                       W  E  L  C  O  M  E    ";
+cout<<"\n                                  T  O";
+cout<<"\n                              P  I  Z  Z  A ";
+cout<<"\n                            P  A  L  A  C  E";
+delay(1000);
+
+cout<<"\n                         BE HEALTHY WITH HEALTHY NUTRITION";
+}
+do
+{
+delay(1000);
+clrscr();
+for(int i=0;i<40;i++)
+cout<<""<<"";
+cout<<"\n                        P";
+delay(100);
+cout<<" I";delay(100); cout<<" Z";delay(100);cout<<" Z";delay(100);cout<<" A";delay(100);cout<<"  P";delay(100);cout<<" A";delay(100); cout<<" L";delay(100);cout<<" A";delay(100);cout<<" C";delay(100);cout<<" E";delay(100); cout<<"\n";
+cout<<"\n";
+for(i=0;i<40;i++)
+cout<<""<<"";
+sound(10*random(100));
+delay(300);
+nosound();
+cout<<"\n\n\t\t1 . BOOK YOUR PIZZA\n";
+sound(10*random(100));
+delay(200);
+nosound();
+delay(100);
+cout<<"\t\t2 . TOTAL ORDER\n";
+sound(10*random(100));
+delay(200);
+nosound();
+delay(100);
+cout<<"\t\t3 . SEARCH\n";
+sound(10*random(100));
+delay(200);
+nosound();
+delay(100);
+cout<<"\t\t4 . MAKE CHANGE IN BILL\n";
+sound(10*random(100));
+delay(200);
+nosound();
+delay(100);
+cout<<"\t\t5 . CANCEL THE ORDER\n";
+sound(10*random(100));
+delay(200);
+nosound();
+delay(100);
+cout<<"\t\t6 . SORRY TO COME IN\n";
+sound(10*random(100));
+delay(200);
+nosound();
+delay(100);
+cout<<"\n\n\t  HOW CAN I HELP YOU  ";
+cin>>k;
+switch(k)
+{
+case 1: clrscr();
+	menu();
+       //	delay(20000);
+	clrscr();
+	cout<<"\n\n\n\n\t\t\tHOW MANY PIZZA DO YOU WANT TO BUY: ";
+	cin>>n;
+	m=n;
+	delay(600);
+	clrscr();
+	ofstream f("customer.dat",ios::binary);
+	do
+	{
+	p.ask_info();
+	p.check_place();
+	delay(1000);
+	p.order();
+	p.bill();
+
+	cout<<"\n\n\t\t\tMAKE ANOTHER ORDER: ";
+	cin>>ans1;
+	}while(ans=='y'||ans=='Y');
+	f.close();
+	break;
+case 2:
+	delay(2000);
+	clrscr();
+	p.display();
+	break;
+case 3:
+	delay(2000);
+	clrscr();
+	cout<<"\n\n\t\t\tENTER THE CUSTOMER CODE TO SEARCHED: ";
+	cin>>ord;
+	p.search(ord);
+	break;
+case 4:
+	delay(2000);
+	clrscr();
+	cout<<"\n\n\t\t\tENTER THE CUSTOMER CODE TO BE MODIFIED: ";
+	cin>>ord;
+	p.modify(ord);
+	break;
+case 5:
+	delay(2000);
+	clrscr();
+	ifstream file("customer.dat",ios::binary);
+	ofstream f3("temp.dat",ios::binary);
+	cout<<"\n\n\tENTER THE BILL NUMBER WHOSE ORDER TO BE CANCELED: ";
+	cin>>ord;
+	file.seekg(0);
+	while(!file.eof())
+	{
+		file.read((char*)&p,sizeof(p));
+		if(file.eof())
+		break;
+		if(p.c_codego()!=ord)
+		f3.write((char*)&p,sizeof(p));
+	}
+		f3.close();
+		file.close();
+		remove("customer.dat");
+		rename("temp.dat","customer.dat");
+		cout<<"\n\n\t\t\tDELETION COMPLETED.........";
+	break;
+case 6:
+	clrscr();
+
+  int gdriver = DETECT, gmode, errorcode;
+  int midx, midy;
+  int radius = 100;
+  initgraph(&gdriver,&gmode,"C:\\turboc3\\bgi");
+   midx = getmaxx() / 2;
+   midy = getmaxy() / 2;
+   setcolor(getmaxcolor());
+
+   {    cout<<"\nt\t                  \n";
+	cout<<"\n\t  THANK YOU FOR VISITING YO US     \n";
+	cout<<"\n\t                  \n";
+	cout<<"\n\t                                 \n";
+	cout<<"\n\t                                 \n";
+	cout<<"\n\t   EAT HEALTHY STAY HEALTHY        \n";
+	cout<<"\n\t         BE    HAPPY               \n";
+	cout<<"\n\t                           \n";
+
+	cout<<"LOGGING OUT.";
+
+	sound(10*random(100));
+	delay(200);
+	nosound();
+   setcolor(RED);
+
+   circle(midx, midy, 0);
+   delay(1000);
+   setcolor(RED);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,2);
+   delay(1000);
+   setcolor(RED);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,3);      delay(1000);setcolor(RED);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,5);      delay(1000);setcolor(RED);
+					     gotoxy(midx,midy);
+   circle(midx,midy,10);      delay(1000);setcolor(RED);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,20);      delay(1000);setcolor(YELLOW);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,30);      delay(1000);setcolor(YELLOW);
+					     gotoxy(midx,midy);
+   circle(midx,midy,40);      delay(1000);setcolor(YELLOW);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,50);      delay(1000);setcolor(GREEN);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,60);      delay(1000);setcolor(GREEN);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,70);      delay(1000);setcolor(GREEN);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,80);      delay(1000);setcolor(GREEN);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,90);      delay(1000);setcolor(GREEN);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,radius);      delay(1000);setcolor(GREEN);
+
+   gotoxy(midx,midy);
+   circle(midx,midy,110);      delay(1000);setcolor(GREEN);
+
+   }
+   closegraph();
+   delay(10000);
+   exit(0);
+   break;
+}
+cout<<"\n\n\t\t\tRERUN(y/n): ";
+cin>>ans2;
+}while(ans2=='y'||ans2=='Y');
+getch();
+}
