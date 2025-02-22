@@ -1,5 +1,5 @@
 #include<iostream>
-#include<conio>
+#include<cstudio>
 #include<stdio>
 #include<stdlib>
 #include<fstream>
