@@ -13,9 +13,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Install Dependencies
-      run: sudo apt-get install -y g++
-    - name: Build
-      run: g++ -o output AKHIL.cpp
-    - name: Run
-      run: ./output
+    - name: Install DOSBox
+      run: sudo apt-get install -y dosbox
+    - name: Set up Turbo C++
+      run: |
+        wget https://archive.org/download/tc3-16/tc3.zip
+        unzip tc3.zip -d $HOME/tc
+        echo -e "[autoexec]\nmount c ~\nc:\ncd tc\ncd bin\n" > $HOME/.dosbox/dosbox-0.74.conf
+    - name: Build and Run in DOSBox
+      run: |
+        echo -e "tc.exe AKHIL.cpp" > $HOME/tc/bin/compile.bat
+        dosbox $HOME/tc/bin/compile.bat -c "exit"
