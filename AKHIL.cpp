@@ -5,7 +5,7 @@
 #include<fstream>
 #include<string.h>
 //#include<dos>
-#include<process.h>
+//#include<process.h>
 #include<graphics.h>
 class pizzat
 {
