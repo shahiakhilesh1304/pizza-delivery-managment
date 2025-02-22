@@ -17,7 +17,7 @@ jobs:
       run: sudo apt-get install -y dosbox
     - name: Download Turbo C++
       run: |
-        wget -O tc3.zip "https://developerinsider.co/downloading/?download=https://github.com/vineetchoudhary/turbocpp/releases/download/v3.2/Turbo.C.3.2.zip?raw=true&after=https://developerinsider.co/c-and-cpp-insider/"
+        wget -O tc3.zip "https://github.com/vineetchoudhary/turbocpp/releases/download/v3.2/Turbo.C.3.2.zip?raw=true"
         unzip tc3.zip -d $HOME/tc
         echo -e "[autoexec]\nmount c ~\nc:\ncd tc\ncd bin\n" > $HOME/.dosbox/dosbox-0.74.conf
     - name: Build and Run in DOSBox
