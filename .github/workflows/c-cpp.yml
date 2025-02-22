@@ -19,6 +19,7 @@ jobs:
       run: |
         wget -O tc3.zip "https://github.com/vineetchoudhary/turbocpp/releases/download/v3.2/Turbo.C.3.2.zip?raw=true"
         unzip tc3.zip -d $HOME/tc
+        mkdir -p $HOME/.dosbox
         echo -e "[autoexec]\nmount c ~\nc:\ncd tc\ncd bin\n" > $HOME/.dosbox/dosbox-0.74.conf
     - name: Build and Run in DOSBox
       run: |
