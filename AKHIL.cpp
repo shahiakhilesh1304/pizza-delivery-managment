@@ -4,8 +4,8 @@
 #include<stdlib.h>
 #include<fstream>
 #include<string.h>
-//#include<dos>
-//#include<process.h>
+#include<dos>
+#include<process.h>
 #include<graphics.h>
 class pizzat
 {
