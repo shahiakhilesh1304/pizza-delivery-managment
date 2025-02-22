@@ -1,12 +1,12 @@
-#include<iostream.h>
-#include<conio.h>
-#include<stdio.h>
-#include<stdlib.h>
-#include<fstream.h>
-#include<string.h>
-#include<dos.h>
-#include<process.h>
-#include<graphics.h>
+#include<iostream>
+#include<conio>
+#include<stdio>
+#include<stdlib>
+#include<fstream>
+#include<string>
+#include<dos>
+#include<process>
+#include<graphics>
 class pizzat
 {
 	  public:
