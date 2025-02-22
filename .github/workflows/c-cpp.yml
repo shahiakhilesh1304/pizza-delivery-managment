@@ -16,6 +16,6 @@ jobs:
     - name: Install Dependencies
       run: sudo apt-get install -y g++
     - name: Build
-      run: g++ -o output source.cpp
+      run: g++ -o output AKHIL.cpp
     - name: Run
       run: ./output
