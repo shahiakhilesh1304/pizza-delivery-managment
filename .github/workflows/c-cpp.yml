@@ -23,5 +23,6 @@ jobs:
         echo -e "[autoexec]\nmount c ~\nc:\ncd tc\ncd bin\n" > $HOME/.dosbox/dosbox-0.74.conf
     - name: Build and Run in DOSBox
       run: |
+        mkdir -p $HOME/tc/bin
         echo -e "tc.exe AKHIL.cpp" > $HOME/tc/bin/compile.bat
         dosbox $HOME/tc/bin/compile.bat -c "exit"
